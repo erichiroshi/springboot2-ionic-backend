@@ -1,7 +1,9 @@
 package com.erichiroshi.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -39,6 +41,9 @@ public class Cliente implements Serializable{
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	@Getter private Set<String> telefones = new HashSet<>();
+	
+	@OneToMany(mappedBy = "cliente")
+	@Getter private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
 		this.id = id;
