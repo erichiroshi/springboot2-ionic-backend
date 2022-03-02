@@ -2,6 +2,10 @@ package com.erichiroshi.cursomc.domain.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.erichiroshi.cursomc.domain.Categoria;
 
 import lombok.Getter;
@@ -12,11 +16,14 @@ import lombok.Setter;
 public class CategoriaDTO implements Serializable {
 
 	@Getter	@Setter	private Integer id;
-	@Getter	@Setter	private String name;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 5, max = 80, message = "O tamanho deve ser enter 5 e 80 caracteres")
+	@Getter	@Setter	private String nome;
 
 	public CategoriaDTO(Categoria obj) {
 		this.id = obj.getId();
-		this.name = obj.getNome();
+		this.nome = obj.getNome();
 	}
 
 }
