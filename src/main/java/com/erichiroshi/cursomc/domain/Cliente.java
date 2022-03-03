@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,8 @@ public class Cliente implements Serializable{
 	@EqualsAndHashCode.Include
 	@Getter @Setter private Integer id;
 	@Getter @Setter private String nome;
+	
+	@Column(unique = true)
 	@Getter @Setter private String email;
 	@Getter @Setter private String cpfOuCnpj;
 	private Integer tipo;
