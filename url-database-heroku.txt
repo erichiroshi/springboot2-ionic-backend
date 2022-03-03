@@ -1,0 +1,13 @@
+CLEARDB_DATABASE_URL: mysql://bf7574bad7e147:3d9779d6@us-cdbr-east-05.cleardb.net/heroku_f6364f58a89e640?reconnect=true
+
+CLEARDB_DATABASE_URL: mysql://
+bf7574bad7e147
+:
+3d9779d6
+@
+us-cdbr-east-05.cleardb.net
+/
+heroku_f6364f58a89e640
+?reconnect=true
+
+mysql --host=us-cdbr-east-05.cleardb.net --user=bf7574bad7e147 --password=3d9779d6 --reconnect heroku_f6364f58a89e640 < arquivo.sql
