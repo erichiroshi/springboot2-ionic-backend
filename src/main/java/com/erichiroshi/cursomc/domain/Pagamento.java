@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 
 import com.erichiroshi.cursomc.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,7 +23,8 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Pagamento implements Serializable{
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public abstract class Pagamento implements Serializable {
 
 	@Id
 	@EqualsAndHashCode.Include
@@ -38,10 +40,10 @@ public abstract class Pagamento implements Serializable{
 
 	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		this.id = id;
-		this.estado = (estado==null) ? null : estado.getCod();
+		this.estado = (estado == null) ? null : estado.getCod();
 		this.pedido = pedido;
 	}
-	
+
 	public EstadoPagamento getEstado() {
 		return EstadoPagamento.toEnum(estado);
 	}

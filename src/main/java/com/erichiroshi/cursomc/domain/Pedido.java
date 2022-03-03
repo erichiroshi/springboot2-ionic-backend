@@ -25,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Pedido implements Serializable{
 	@Getter @Setter private Integer id;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	@Getter @Setter private Date instant;
+	@Getter @Setter private Date instante;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="pedido")
 	@Getter @Setter private Pagamento pagamento;
@@ -51,11 +51,11 @@ public class Pedido implements Serializable{
 
 	public Pedido(Integer id, Date instant, Cliente cliente, Endereco enderecoDeEntrega) {
 		this.id = id;
-		this.instant = instant;
+		this.instante = instant;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
-	
+
 	public double getValorTotal() {
 		double soma = 0.0;
 		for (ItemPedido ip : itens) {
@@ -63,5 +63,5 @@ public class Pedido implements Serializable{
 		}
 		return soma;
 	}
-	
+
 }
