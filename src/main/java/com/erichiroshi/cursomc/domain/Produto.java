@@ -33,7 +33,7 @@ public class Produto implements Serializable{
 	@Getter @Setter private Integer id;
 	
 	@Getter @Setter private String nome;
-	@Getter @Setter private Double price;
+	@Getter @Setter private Double preco;
 	
 	@JsonIgnore
 	@ManyToMany
@@ -44,10 +44,10 @@ public class Produto implements Serializable{
 	@OneToMany(mappedBy = "id.produto")
 	@Getter private Set<ItemPedido> itens = new HashSet<>();
 
-	public Produto(Integer id, String nome, Double price) {
+	public Produto(Integer id, String nome, Double preco) {
 		this.id = id;
 		this.nome = nome;
-		this.price = price;
+		this.preco = preco;
 	}
 	
 	@JsonIgnore
