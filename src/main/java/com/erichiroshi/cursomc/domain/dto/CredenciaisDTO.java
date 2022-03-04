@@ -1,0 +1,16 @@
+package com.erichiroshi.cursomc.domain.dto;
+
+import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+public class CredenciaisDTO implements Serializable {
+
+	private String email;
+	private String senha;
+}
