@@ -17,6 +17,11 @@ import lombok.Setter;
 @Setter
 public class StandardError implements Serializable {
 
+	public StandardError(Integer status, String msg, Instant timestamp) {
+		this.timestamp = timestamp;
+		this.status = status;
+		this.msg = msg;
+	}
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT")
 	private Instant timestamp;
 	private Integer status;
