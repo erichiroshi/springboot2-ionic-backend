@@ -59,12 +59,9 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	@Getter private List<Pedido> pedidos = new ArrayList<>();
 	
-	@Getter @Setter private String imageUrl;
-	
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
 	}
-
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		this.id = id;
