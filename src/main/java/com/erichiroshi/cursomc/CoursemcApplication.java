@@ -1,4 +1,4 @@
-package com.erichiroshi.coursemc;
+package com.erichiroshi.cursomc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
