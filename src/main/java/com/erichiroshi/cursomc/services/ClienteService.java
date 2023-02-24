@@ -5,22 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.erichiroshi.cursomc.domain.Produto;
-import com.erichiroshi.cursomc.repositories.ProdutoRepository;
+import com.erichiroshi.cursomc.domain.Cliente;
+import com.erichiroshi.cursomc.repositories.ClienteRepository;
 import com.erichiroshi.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class ProdutoService {
+public class ClienteService {
 
 	@Autowired
-	private ProdutoRepository repository;
+	private ClienteRepository repository;
 
-	public Produto findById(Integer id) {
+	public Cliente findById(Integer id) {
 		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
-											"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
+											"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
-	public List<Produto> findAll() {
+	public List<Cliente> findAll() {
 		return repository.findAll();
 	}
 
