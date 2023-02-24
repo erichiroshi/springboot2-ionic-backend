@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +38,10 @@ public class Produto implements Serializable {
 				joinColumns = @JoinColumn(name = "produto_id"),
 				inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "itens")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Produto(Integer id, String nome, Double preco) {
 		this.id = id;

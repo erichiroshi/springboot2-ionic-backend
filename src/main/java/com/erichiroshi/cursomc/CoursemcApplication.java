@@ -1,5 +1,7 @@
 package com.erichiroshi.cursomc;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,20 @@ import com.erichiroshi.cursomc.domain.Cidade;
 import com.erichiroshi.cursomc.domain.Cliente;
 import com.erichiroshi.cursomc.domain.Endereco;
 import com.erichiroshi.cursomc.domain.Estado;
+import com.erichiroshi.cursomc.domain.Pagamento;
+import com.erichiroshi.cursomc.domain.PagamentoComBoleto;
+import com.erichiroshi.cursomc.domain.PagamentoComCartao;
+import com.erichiroshi.cursomc.domain.Pedido;
 import com.erichiroshi.cursomc.domain.Produto;
+import com.erichiroshi.cursomc.domain.enums.EstadoPagamento;
 import com.erichiroshi.cursomc.domain.enums.TipoCliente;
 import com.erichiroshi.cursomc.repositories.CategoriaRepository;
 import com.erichiroshi.cursomc.repositories.CidadeRepository;
 import com.erichiroshi.cursomc.repositories.ClienteRepository;
 import com.erichiroshi.cursomc.repositories.EnderecoRepository;
 import com.erichiroshi.cursomc.repositories.EstadoRepository;
+import com.erichiroshi.cursomc.repositories.PagamentoRepository;
+import com.erichiroshi.cursomc.repositories.PedidoRepository;
 import com.erichiroshi.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -41,6 +50,12 @@ public class CoursemcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoursemcApplication.class, args);
@@ -89,5 +104,19 @@ public class CoursemcApplication implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
+		Pedido ped1 = new Pedido(null, LocalDateTime.of(2017, 9, 30, 10, 32),  cli1, e1); 
+		Pedido ped2 = new Pedido(null, LocalDateTime.of(2017, 10, 10, 19, 35), cli1, e2);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, LocalDate.of(2017, 10, 20), null);
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 	}
 }
