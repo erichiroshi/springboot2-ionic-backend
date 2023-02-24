@@ -111,7 +111,7 @@ public class CoursemcApplication implements CommandLineRunner {
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 		Pedido ped1 = new Pedido(null, LocalDateTime.of(2017, 9, 30, 10, 32),  cli1, e1); 
-		Pedido ped2 = new Pedido(null, LocalDateTime.of(2017, 10, 10, 19, 35), cli1, e2);
+		Pedido ped2 = new Pedido(null, LocalDateTime.of(2017, 10, 10, 10, 35), cli1, e2);
 		
 		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
