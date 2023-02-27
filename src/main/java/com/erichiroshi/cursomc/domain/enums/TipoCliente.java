@@ -16,13 +16,18 @@ public enum TipoCliente {
 		this.descricao = descricao;
 	}
 
-	public static TipoCliente valueOf(int code) {
-		for (TipoCliente value : TipoCliente.values()) {
-			if (value.getCod() == code) {
-				return value;
+	public static TipoCliente toEnum(Integer cod) {
+		if (cod == null) {
+			return null;
+		}
+
+		for (TipoCliente x : TipoCliente.values()) {
+			if (cod.equals(x.getCod())) {
+				return x;
 			}
 		}
-		throw new IllegalArgumentException("Invalid TipoCliente code");
+
+		throw new IllegalArgumentException("Id inválido: " + cod);
 	}
 
 }

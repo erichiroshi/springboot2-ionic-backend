@@ -54,11 +54,11 @@ public class Cliente implements Serializable{
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCNPJ = cpfOuCNPJ;
-		setTipo(tipo);
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
 	public TipoCliente getTipo() {
-		return TipoCliente.valueOf(tipo);
+		return TipoCliente.toEnum(tipo);
 	}
 
 	public void setTipo(TipoCliente tipo) {
