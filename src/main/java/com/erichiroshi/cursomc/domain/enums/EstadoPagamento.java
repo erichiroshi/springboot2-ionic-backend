@@ -17,13 +17,19 @@ public enum EstadoPagamento {
 		this.descricao = descricao;
 	}
 
-	public static EstadoPagamento valueOf(int code) {
-		for (EstadoPagamento value : EstadoPagamento.values()) {
-			if (value.getCode() == code) {
-				return value;
+	public static EstadoPagamento toEnum(Integer code) {
+
+		if (code == null) {
+			return null;
+		}
+
+		for (EstadoPagamento x : EstadoPagamento.values()) {
+			if (code.equals(x.getCode())) {
+				return x;
 			}
 		}
-		throw new IllegalArgumentException("Invalid EstadoPagamento code");
+
+		throw new IllegalArgumentException("Id inválido: " + code);
 	}
 
 }
