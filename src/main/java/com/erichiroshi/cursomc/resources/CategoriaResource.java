@@ -21,6 +21,8 @@ import com.erichiroshi.cursomc.domain.Categoria;
 import com.erichiroshi.cursomc.domain.dto.CategoriaDTO;
 import com.erichiroshi.cursomc.services.CategoriaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaResource {
@@ -42,17 +44,19 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> inserir(@RequestBody Categoria obj) {
+	public ResponseEntity<Categoria> inserir(@Valid @RequestBody CategoriaDTO objDto) {
+		Categoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> atualizar(@PathVariable Integer id, @RequestBody Categoria obj) {
-		obj.setId(id);
+	public ResponseEntity<CategoriaDTO> atualizar(@PathVariable Integer id,@Valid @RequestBody CategoriaDTO objDto) {
+		objDto.setId(id);
+		Categoria obj = service.fromDTO(objDto);
 		obj = service.update(obj);
-		return ResponseEntity.ok(obj);
+		return ResponseEntity.ok(new CategoriaDTO(obj));
 	}
 	
 	@DeleteMapping("/{id}")
