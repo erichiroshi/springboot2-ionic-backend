@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.erichiroshi.cursomc.domain.Categoria;
+import com.erichiroshi.cursomc.domain.dto.CategoriaDTO;
 import com.erichiroshi.cursomc.services.CategoriaService;
 
 @RestController
@@ -32,9 +33,10 @@ public class CategoriaResource {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll() {
-		List<Categoria> categorias = service.findAll();
-		return ResponseEntity.ok(categorias);
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		List<CategoriaDTO> listDto = list.stream().map(x -> new CategoriaDTO(x)).toList();
+		return ResponseEntity.ok(listDto);
 	}
 	
 	@PostMapping
