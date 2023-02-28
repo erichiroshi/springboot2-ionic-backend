@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Length;
 
 import com.erichiroshi.cursomc.domain.Cliente;
+import com.erichiroshi.cursomc.services.validation.ClienteUpdate;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
