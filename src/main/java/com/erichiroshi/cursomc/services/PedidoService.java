@@ -54,6 +54,7 @@ public class PedidoService {
 		obj.setId(null);
 		obj.setInstante(LocalDateTime.now());
 		obj.setCliente(clienteService.findById(obj.getCliente().getId()));
+		obj.setEnderecoDeEntrega(clienteService.findById(obj.getCliente().getId()).getEnderecos().get(obj.getEnderecoDeEntrega().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
