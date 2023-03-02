@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -30,7 +31,10 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+			http.authorizeHttpRequests().requestMatchers("/h2-console/**").permitAll();
 			http.headers().frameOptions().sameOrigin();
+		    http.headers().frameOptions().disable();
+
 		}
 
 	        http
@@ -57,5 +61,10 @@ public class SecurityConfig {
 			source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 			return source;
 		}
-		
+
+		@Bean
+		public BCryptPasswordEncoder bCryptPasswordEncoder() {
+			return new BCryptPasswordEncoder();
+		}
+
 	}
