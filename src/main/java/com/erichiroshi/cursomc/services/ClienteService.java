@@ -15,9 +15,12 @@ import com.erichiroshi.cursomc.domain.Cliente;
 import com.erichiroshi.cursomc.domain.Endereco;
 import com.erichiroshi.cursomc.domain.dto.ClienteDTO;
 import com.erichiroshi.cursomc.domain.dto.ClienteNewDTO;
+import com.erichiroshi.cursomc.domain.enums.Perfil;
 import com.erichiroshi.cursomc.domain.enums.TipoCliente;
 import com.erichiroshi.cursomc.repositories.ClienteRepository;
 import com.erichiroshi.cursomc.repositories.EnderecoRepository;
+import com.erichiroshi.cursomc.security.UserSS;
+import com.erichiroshi.cursomc.services.exceptions.AuthorizationException;
 import com.erichiroshi.cursomc.services.exceptions.DataIntegrityException;
 import com.erichiroshi.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -34,8 +37,14 @@ public class ClienteService {
 	private BCryptPasswordEncoder pe;
 
 	public Cliente findById(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+
 		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
-											"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 	public List<Cliente> findAll() {
