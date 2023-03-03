@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,6 +26,7 @@ import com.erichiroshi.cursomc.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 	
 	@Autowired
@@ -41,7 +43,9 @@ public class SecurityConfig {
 
 	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
 
-	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**", "/clientes/**"};
+	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**" };
+
+	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes/**" };
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -50,21 +54,14 @@ public class SecurityConfig {
 			http.authorizeHttpRequests().requestMatchers("/h2-console/**").permitAll();
 			http.headers().frameOptions().sameOrigin();
 		    http.headers().frameOptions().disable();
-
 		}
 
-	        http
-	        	.cors()
-	        	.and()
-	        	.csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET)
-                .permitAll()
-                .requestMatchers(PUBLIC_MATCHERS)
-                .permitAll()
-                .anyRequest()
-                .authenticated();
+	        http.cors().and().csrf().disable();
+	        http.authorizeHttpRequests()
+    			.requestMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+                .requestMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+                .requestMatchers(PUBLIC_MATCHERS).permitAll()
+                .anyRequest().authenticated();
 	        
 			http.addFilter(new JWTAuthenticationFilter(configuration.getAuthenticationManager(), jwtUtil));
 			http.addFilter(new JWTAuthorizationFilter(configuration.getAuthenticationManager(), jwtUtil, userDetailsService));
