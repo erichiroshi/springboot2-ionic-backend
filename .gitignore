@@ -36,3 +36,5 @@ build/
 !**/src/main/resources/application-dev.properties
 !**/application-test.properties
 */application-test.properties
+
+application-dev.properties
