@@ -45,14 +45,13 @@ public class SecurityConfig {
 
 	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**" };
 
-	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes", "/clientes/picture", "/auth/forgot/**" };
+	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes", "/auth/forgot/**" };
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.authorizeHttpRequests().requestMatchers("/h2-console/**").permitAll();
-			http.headers().frameOptions().sameOrigin();
 		    http.headers().frameOptions().disable();
 		}
 
