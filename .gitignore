@@ -38,3 +38,7 @@ build/
 */application-test.properties
 
 application-dev.properties
+**/application-dev.properties
+
+/resources/application-dev.properties
+*\resources\application-dev.properties
